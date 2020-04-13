@@ -44,10 +44,12 @@ public class Main extends Application{
         test.setHeight(815);
         test.setWidth(185);
         test.setFill(Color.valueOf("#b56f05"));
+
+
         rightHudSections.add(test, 0, 1);
         rightHUD.getChildren().add(rightHudSections);
 
-        gameCanvas.setRight(rightHUD);
+        gameCanvas.setRight(test);
 
 
 
