@@ -3,6 +3,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -34,13 +35,23 @@ public class Main extends Application{
         BorderPane gameCanvas = new BorderPane();
         // create instance of the game board
         GridPane gameBoard = createGameBoard();
-
         gameCanvas.setLeft(gameBoard);
 
-        Pane bottomHud = new Pane();
+        Pane rightHUD = new Pane();
+        rightHUD.setMaxWidth(185);
+        GridPane rightHudSections = new GridPane();
+        Rectangle test = new Rectangle();
+        test.setHeight(815);
+        test.setWidth(185);
+        test.setFill(Color.valueOf("#b56f05"));
+        rightHudSections.add(test, 0, 1);
+        rightHUD.getChildren().add(rightHudSections);
+
+        gameCanvas.setRight(rightHUD);
 
 
 
+        // initialization of stage
         Scene mainScene = new Scene(gameCanvas, 1000, 815);
         stage.setScene(mainScene);
         stage.show();
