@@ -7,10 +7,16 @@ public class Disk extends ImageView {
     boolean isBlack = false;
     boolean isWhite = false;
 
-    public Disk(){
+    public Disk(boolean isWhite){
         this.setFitHeight(100);
         this.setFitWidth(100);
-        this.setImage(new Image("BlackDisk.png"));
+        if (isWhite){
+            this.setImage(new Image("WhiteDisk.png"));
+        }
+        else{
+            this.setImage(new Image("BlackDisk.png"));
+
+        }
 
 
     }

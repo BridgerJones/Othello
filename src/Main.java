@@ -27,8 +27,8 @@ public class Main extends Application{
             { N, N, N, N, N, N, N, N, },
             { N, N, N, N, N, N, N, N, },
             { N, N, N, N, N, N, N, N, },
-            { N, N, N, N, N, N, N, N, },
-            { N, N, N, N, N, N, N, N, },
+            { N, N, N, W, B, N, N, N, },
+            { N, N, N, B, W, N, N, N, },
             { N, N, N, N, N, N, N, N, },
             { N, N, N, N, N, N, N, N, },
             { N, N, N, N, N, N, N, N, },
@@ -36,19 +36,25 @@ public class Main extends Application{
     };
 
     public void start(Stage stage){
+
         Pane gameCanvas = new Pane();
         // create instance of the game board
         GridPane gameBoard = createGameBoard();
-
-        GridPane diskLayer = createDiskLayer();
-
-
-        diskLayer.add(new Disk(), 0, 0);
-        diskLayer.add(new Disk(), 1, 0);
-        diskLayer.add(new Disk(), 7, 7);
         gameCanvas.getChildren().add(gameBoard);
+        // create instance of the disk layer
+        GridPane diskLayer = createDiskLayer();
         gameCanvas.getChildren().add(diskLayer);
 
+        for (int row = 0; row < 8; row++){
+            for (int col = 0; col < 8; col++){
+                if (gameLogic[row][col] == B){
+                    diskLayer.add(new Disk(false), row, col);
+                }
+                else if (gameLogic[row][col] == W){
+                    diskLayer.add(new Disk(true), row, col);
+                }
+            }
+        }
 
 //        Pane rightHUD = new Pane();
 //        rightHUD.setMaxWidth(185);
@@ -81,8 +87,8 @@ public class Main extends Application{
 
         GridPane gameBoard = new GridPane();
 
-        for(int row = 1; row < 9; row++){
-            for (int col = 1; col < 9; col++){
+        for(int row = 0; row < 8; row++){
+            for (int col = 0; col < 8; col++){
                 gameBoard.add(new GridSquare(), row, col);
             }
         }
@@ -93,8 +99,8 @@ public class Main extends Application{
 
         GridPane gameBoard = new GridPane();
 
-        for(int row = 1; row < 9; row++){
-            for (int col = 1; col < 9; col++){
+        for(int row = 0; row < 8; row++){
+            for (int col = 0; col < 8; col++){
                 GridSquare temp = new GridSquare();
                 temp.setFill(Color.TRANSPARENT);
                 temp.setStroke(Color.TRANSPARENT);
