@@ -112,10 +112,20 @@ public class Main extends Application{
         for(int row = 0; row < 8; row++){
             for (int col = 0; col < 8; col++){
                 GridSquare temp = new GridSquare(row, col);
-                temp.setOnMouseClicked(event ->{
-                    updateValidMoves(gameLogic);
-                    logGameLogicState(gameLogic);
+                temp.setOnMouseEntered(event ->{
+                    int getCol = temp.getCord()[0];
+                    int getRow = temp.getCord()[1];
 
+                    updateValidMoves(gameLogic);
+                    if (gameLogic[getRow][getCol] == validBlack){
+                        temp.setFill(Paint.valueOf("#32c7b8"));
+                    }
+
+
+
+                });
+                temp.setOnMouseExited(event ->{
+                    temp.setFill(Color.TRANSPARENT);
                 });
                 temp.setFill(Color.TRANSPARENT);
                 temp.setStroke(Color.TRANSPARENT);
@@ -153,7 +163,9 @@ public class Main extends Application{
                     if (gameLogic[row - rowOffSet][col] == W){
                         checkN(gameLogic, row, col);
                     }
-
+                    if (gameLogic[row][col + columnOffSet] == W){
+                        checkE(gameLogic, row, col);
+                    }
                     //check NE
 
                     //check E
@@ -185,9 +197,23 @@ public class Main extends Application{
         }
         if (gameLogic[row - rowOffSet][col] == N){
             gameLogic[row - rowOffSet][col] = validBlack;
-            for (int i = 0; i <= rowOffSet; i++){
-                gameLogic[row - i][col] = B;
-            }
+//            for (int i = 0; i <= rowOffSet; i++){
+//                gameLogic[row - i][col] = B;
+//            }
+        }
+    }
+
+    private static void checkE(int[][] gameLogic, int row, int col){
+        int rowOffSet = 1;
+        int colOffSet = 1;
+        while(gameLogic[row][col + colOffSet] == W){
+            colOffSet++;
+        }
+        if (gameLogic[row][col + colOffSet] == N){
+            gameLogic[row][col + colOffSet] = validBlack;
+//            for (int i = 0; i <= colOffSet; i++){
+//                gameLogic[row][col + i] = B;
+//            }
         }
     }
 
@@ -205,4 +231,6 @@ public class Main extends Application{
         }
         System.out.println("\n\n");;
     }
+
+
 }
