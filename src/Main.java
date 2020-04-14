@@ -11,6 +11,9 @@ import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.awt.event.MouseEvent;
+import java.util.Set;
+
 public class Main extends Application{
     // Neutral Space
     static final int N = 0;
@@ -29,7 +32,7 @@ public class Main extends Application{
     Background diskLayerBackground = new Background(new BackgroundFill(Paint.valueOf("#ab1bf3"), null, null));
 
     // numerical representation of the game logic
-    int[][] gameLogic = {
+    public int[][] gameLogic = {
             { N, N, N, N, N, N, N, N, },
             { N, N, N, N, N, N, N, N, },
             { N, N, N, N, N, N, N, N, },
@@ -41,6 +44,8 @@ public class Main extends Application{
 
     };
 
+
+
     public void start(Stage stage){
 
         Pane gameCanvas = new Pane();
@@ -48,13 +53,16 @@ public class Main extends Application{
         GridPane gameBoard = createGameBoard();
         gameCanvas.getChildren().add(gameBoard);
         // create instance of the disk layer
-        GridPane diskLayer = createDiskLayer();
+        GridPane diskLayer = createDiskLayer(gameLogic);
+        diskLayer.setOnMouseClicked(event ->{
+            updateCanvas(gameLogic, diskLayer);
+        });
 
         gameCanvas.getChildren().add(diskLayer);
         updateCanvas(gameLogic, diskLayer);
 
 
-        updateValidMoves(gameLogic);
+
         logGameLogicState(gameLogic);
 
 
@@ -97,7 +105,7 @@ public class Main extends Application{
 
         return gameBoard;
     }
-    public static GridPane createDiskLayer(){
+    public static GridPane createDiskLayer(int[][]gameLogic){
 
         GridPane gameBoard = new GridPane();
 
@@ -105,9 +113,8 @@ public class Main extends Application{
             for (int col = 0; col < 8; col++){
                 GridSquare temp = new GridSquare(row, col);
                 temp.setOnMouseClicked(event ->{
-                    int getRow = temp.getCord()[0];
-                    int getCol = temp.getCord()[1];
-                    System.out.printf("%d, %d\n", getRow, getCol);
+                    updateValidMoves(gameLogic);
+                    logGameLogicState(gameLogic);
 
                 });
                 temp.setFill(Color.TRANSPARENT);
@@ -125,10 +132,11 @@ public class Main extends Application{
         for (int row = 0; row < 8; row++){
             for (int col = 0; col < 8; col++){
                 if (gameLogic[row][col] == B){
-                    diskLayer.add(new Disk(false), row, col);
+
+                    diskLayer.add(new Disk(false), col, row);
                 }
                 else if (gameLogic[row][col] == W){
-                    diskLayer.add(new Disk(true), row, col);
+                    diskLayer.add(new Disk(true), col, row);
                 }
             }
         }
@@ -171,11 +179,15 @@ public class Main extends Application{
         int rowOffSet = 1;
         int colOffSet = 1;
 
+
         while(gameLogic[row - rowOffSet][col] == W){
             rowOffSet++;
         }
         if (gameLogic[row - rowOffSet][col] == N){
             gameLogic[row - rowOffSet][col] = validBlack;
+            for (int i = 0; i <= rowOffSet; i++){
+                gameLogic[row - i][col] = B;
+            }
         }
     }
 
@@ -191,5 +203,6 @@ public class Main extends Application{
                 }
             }
         }
+        System.out.println("\n\n");;
     }
 }
