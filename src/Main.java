@@ -43,6 +43,7 @@ public class Main extends Application{
         gameCanvas.getChildren().add(gameBoard);
         // create instance of the disk layer
         GridPane diskLayer = createDiskLayer();
+
         gameCanvas.getChildren().add(diskLayer);
 
         for (int row = 0; row < 8; row++){
@@ -89,7 +90,7 @@ public class Main extends Application{
 
         for(int row = 0; row < 8; row++){
             for (int col = 0; col < 8; col++){
-                gameBoard.add(new GridSquare(), row, col);
+                gameBoard.add(new GridSquare(row, col), row, col);
             }
         }
 
@@ -101,7 +102,7 @@ public class Main extends Application{
 
         for(int row = 0; row < 8; row++){
             for (int col = 0; col < 8; col++){
-                GridSquare temp = new GridSquare();
+                GridSquare temp = new GridSquare(row, col);
                 temp.setFill(Color.TRANSPARENT);
                 temp.setStroke(Color.TRANSPARENT);
                 gameBoard.add(temp, row, col);
