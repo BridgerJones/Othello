@@ -1,9 +1,10 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -17,6 +18,9 @@ public class Main extends Application{
     private final int B = 1;
     // white Disk state
     private final int W = 2;
+
+    // backgrounds
+    Background diskLayerBackground = new Background(new BackgroundFill(Paint.valueOf("#ab1bf3"), null, null));
 
     // numerical representation of the game logic
     int[][] gameLogic = {
@@ -32,24 +36,33 @@ public class Main extends Application{
     };
 
     public void start(Stage stage){
-        BorderPane gameCanvas = new BorderPane();
+        Pane gameCanvas = new Pane();
         // create instance of the game board
         GridPane gameBoard = createGameBoard();
-        gameCanvas.setLeft(gameBoard);
 
-        Pane rightHUD = new Pane();
-        rightHUD.setMaxWidth(185);
-        GridPane rightHudSections = new GridPane();
-        Rectangle test = new Rectangle();
-        test.setHeight(815);
-        test.setWidth(185);
-        test.setFill(Color.valueOf("#b56f05"));
+        GridPane diskLayer = createDiskLayer();
 
 
-        rightHudSections.add(test, 0, 1);
-        rightHUD.getChildren().add(rightHudSections);
+        diskLayer.add(new Disk(), 0, 0);
+        diskLayer.add(new Disk(), 1, 0);
+        diskLayer.add(new Disk(), 7, 7);
+        gameCanvas.getChildren().add(gameBoard);
+        gameCanvas.getChildren().add(diskLayer);
 
-        gameCanvas.setRight(test);
+
+//        Pane rightHUD = new Pane();
+//        rightHUD.setMaxWidth(185);
+//        GridPane rightHudSections = new GridPane();
+//        Rectangle test = new Rectangle();
+//        test.setHeight(815);
+//        test.setWidth(185);
+//        test.setFill(Color.valueOf("#b56f05"));
+
+
+//        rightHudSections.add(test, 0, 1);
+//        rightHUD.getChildren().add(rightHudSections);
+//
+//        gameCanvas.setRight(test);
 
 
 
@@ -71,6 +84,21 @@ public class Main extends Application{
         for(int row = 1; row < 9; row++){
             for (int col = 1; col < 9; col++){
                 gameBoard.add(new GridSquare(), row, col);
+            }
+        }
+
+        return gameBoard;
+    }
+    public static GridPane createDiskLayer(){
+
+        GridPane gameBoard = new GridPane();
+
+        for(int row = 1; row < 9; row++){
+            for (int col = 1; col < 9; col++){
+                GridSquare temp = new GridSquare();
+                temp.setFill(Color.TRANSPARENT);
+                temp.setStroke(Color.TRANSPARENT);
+                gameBoard.add(temp, row, col);
             }
         }
 
