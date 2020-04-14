@@ -13,11 +13,17 @@ import javafx.stage.Stage;
 
 public class Main extends Application{
     // Neutral Space
-    private final int N = 0;
+    static final int N = 0;
     // Black Disk state
-    private final int B = 1;
+    static final int B = 1;
     // white Disk state
-    private final int W = 2;
+    static final int W = 2;
+    //valid move black
+    static final int validBlack = 3;
+    //valid move white
+    static final int validWhite = 4;
+
+
 
     // backgrounds
     Background diskLayerBackground = new Background(new BackgroundFill(Paint.valueOf("#ab1bf3"), null, null));
@@ -45,17 +51,12 @@ public class Main extends Application{
         GridPane diskLayer = createDiskLayer();
 
         gameCanvas.getChildren().add(diskLayer);
+        updateCanvas(gameLogic, diskLayer);
 
-        for (int row = 0; row < 8; row++){
-            for (int col = 0; col < 8; col++){
-                if (gameLogic[row][col] == B){
-                    diskLayer.add(new Disk(false), row, col);
-                }
-                else if (gameLogic[row][col] == W){
-                    diskLayer.add(new Disk(true), row, col);
-                }
-            }
-        }
+
+        updateValidMoves(gameLogic);
+        logGameLogicState(gameLogic);
+
 
 //        Pane rightHUD = new Pane();
 //        rightHUD.setMaxWidth(185);
@@ -103,6 +104,12 @@ public class Main extends Application{
         for(int row = 0; row < 8; row++){
             for (int col = 0; col < 8; col++){
                 GridSquare temp = new GridSquare(row, col);
+                temp.setOnMouseClicked(event ->{
+                    int getRow = temp.getCord()[0];
+                    int getCol = temp.getCord()[1];
+                    System.out.printf("%d, %d\n", getRow, getCol);
+
+                });
                 temp.setFill(Color.TRANSPARENT);
                 temp.setStroke(Color.TRANSPARENT);
                 gameBoard.add(temp, row, col);
@@ -112,5 +119,77 @@ public class Main extends Application{
         return gameBoard;
     }
 
+    public static void updateCanvas(int[][] gameLogic, GridPane diskLayer){
 
+
+        for (int row = 0; row < 8; row++){
+            for (int col = 0; col < 8; col++){
+                if (gameLogic[row][col] == B){
+                    diskLayer.add(new Disk(false), row, col);
+                }
+                else if (gameLogic[row][col] == W){
+                    diskLayer.add(new Disk(true), row, col);
+                }
+            }
+        }
+    }
+
+    public static void updateValidMoves(int[][] gameLogic){
+        for (int row = 0; row < 8; row++){
+            for (int col = 0; col < 8; col++){
+                //black disk logic
+                if (gameLogic[row][col] == B){
+                    int rowOffSet = 1;
+                    int columnOffSet = 1;
+                    //check N
+                    if (gameLogic[row - rowOffSet][col] == W){
+                        checkN(gameLogic, row, col);
+                    }
+
+                    //check NE
+
+                    //check E
+
+                    //check SE
+
+                    //check S
+
+                    //check SW
+
+                    //check W
+
+                    //check NW
+
+                }
+                //white disk logic
+
+            }
+        }
+    }
+
+    private static void checkN(int[][] gameLogic, int row, int col){
+        int rowOffSet = 1;
+        int colOffSet = 1;
+
+        while(gameLogic[row - rowOffSet][col] == W){
+            rowOffSet++;
+        }
+        if (gameLogic[row - rowOffSet][col] == N){
+            gameLogic[row - rowOffSet][col] = validBlack;
+        }
+    }
+
+    public static void logGameLogicState(int[][] gameLogic){
+        for(int row = 0; row < 8; row++){
+            for (int col = 0; col < 8; col++){
+                if (col == 7){
+                    System.out.printf("%d,\n", gameLogic[row][col]);
+
+                }
+                else {
+                    System.out.printf("%d, ", gameLogic[row][col]);
+                }
+            }
+        }
+    }
 }

@@ -14,12 +14,12 @@ public class GridSquare extends Rectangle{
         this.row = row;
         this.col = col;
 
-        this.setOnMouseClicked(event -> {
-            int printRow = this.getCord()[0];
-            int printCol = this.getCord()[1];
-            System.out.printf("%d, %d\n", printRow, printCol);
-
-        });
+//        this.setOnMouseClicked(event -> {
+//            int printRow = this.getCord()[0];
+//            int printCol = this.getCord()[1];
+//            System.out.printf("%d, %d\n", printRow, printCol);
+//
+//        });
     }
 
     public int[] getCord(){
