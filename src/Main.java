@@ -26,6 +26,8 @@ public class Main extends Application{
     //valid move white
     static final int validWhite = 4;
 
+    static boolean isWhiteTurn = true;
+
 
 
     // backgrounds
@@ -35,13 +37,12 @@ public class Main extends Application{
     public int[][] gameLogic = {
             { N, N, N, N, N, N, N, N, },
             { N, N, N, N, N, N, N, N, },
-            { N, N, N, W, N, W, N, N, },
+            { N, N, N, N, N, N, N, N, },
             { N, N, N, W, B, N, N, N, },
             { N, N, N, B, W, N, N, N, },
-            { N, N, W, N, W, N, N, N, },
             { N, N, N, N, N, N, N, N, },
             { N, N, N, N, N, N, N, N, },
-
+            { N, N, N, N, N, N, N, N, },
     };
 
 
@@ -117,9 +118,19 @@ public class Main extends Application{
                     int getRow = temp.getCord()[1];
 
                     updateValidMoves(gameLogic);
-                    if (gameLogic[getRow][getCol] == validBlack){
-                        temp.setFill(Paint.valueOf("#32c7b8"));
+                    logGameLogicState(gameLogic);
+                    if (isWhiteTurn){
+                        if (gameLogic[getRow][getCol] == validWhite){
+                            temp.setFill(Paint.valueOf("#f2f5f5"));
+                        }
                     }
+
+                    else {
+                        if (gameLogic[getRow][getCol] == validBlack){
+                            temp.setFill(Paint.valueOf("#ebeded"));
+                        }
+                    }
+
 
 
 
@@ -155,147 +166,286 @@ public class Main extends Application{
     public static void updateValidMoves(int[][] gameLogic){
         for (int row = 0; row < 8; row++){
             for (int col = 0; col < 8; col++){
-                //black disk logic
-                if (gameLogic[row][col] == B){
-                    int rowOffSet = 1;
-                    int columnOffSet = 1;
-                    //check N
-                    if (gameLogic[row - rowOffSet][col] == W){
-                        checkN(gameLogic, row, col);
-                    }
-                    //check NE
-                    if (gameLogic[row - rowOffSet][col + columnOffSet] == W){
-                        checkNE(gameLogic, row, col);
-                    }
-                    //check E
-                    if (gameLogic[row][col + columnOffSet] == W){
-                        checkE(gameLogic, row, col);
-                    }
-                    //check SE
-                    if (gameLogic[row + rowOffSet][col + columnOffSet] == W){
-                        checkSE(gameLogic, row, col);
-                    }
-                    //check S
-                    if (gameLogic[row + rowOffSet][col] == W){
-                        checkS(gameLogic, row, col);
-                    }
-                    //check SW
-                    if (gameLogic[row + rowOffSet][col - columnOffSet] == W){
-                        checkSW(gameLogic, row, col);
-                    }
-                    //check W
-                    if (gameLogic[row][col - columnOffSet] == W){
-                        checkW(gameLogic, row, col);
-                    }
-                    //check NW
-                    if (gameLogic[row - rowOffSet][col - columnOffSet] == W){
-                        checkNW(gameLogic, row, col);
+                if (isWhiteTurn){
+                    //white disk logic
+                    if (gameLogic[row][col] == W){
+                        int rowOffSet = 1;
+                        int columnOffSet = 1;
+                        //check N
+                        if (gameLogic[row - rowOffSet][col] == B){
+                            checkN(gameLogic, row, col, true);
+                        }
+                        //check NE
+                        if (gameLogic[row - rowOffSet][col + columnOffSet] == B){
+                            checkNE(gameLogic, row, col, true);
+                        }
+                        //check E
+                        if (gameLogic[row][col + columnOffSet] == B){
+                            checkE(gameLogic, row, col, true);
+                        }
+                        //check SE
+                        if (gameLogic[row + rowOffSet][col + columnOffSet] == B){
+                            checkSE(gameLogic, row, col, true);
+                        }
+                        //check S
+                        if (gameLogic[row + rowOffSet][col] == B){
+                            checkS(gameLogic, row, col, true);
+                        }
+                        //check SW
+                        if (gameLogic[row + rowOffSet][col - columnOffSet] == B){
+                            checkSW(gameLogic, row, col, true);
+                        }
+                        //check W
+                        if (gameLogic[row][col - columnOffSet] == B){
+                            checkW(gameLogic, row, col, true);
+                        }
+                        //check NW
+                        if (gameLogic[row - rowOffSet][col - columnOffSet] == B){
+                            checkNW(gameLogic, row, col, true);
+                        }
                     }
                 }
-                //white disk logic
-
+                else {
+                    // black disk logic
+                    if (gameLogic[row][col] == B){
+                        int rowOffSet = 1;
+                        int columnOffSet = 1;
+                        //check N
+                        if (gameLogic[row - rowOffSet][col] == W){
+                            checkN(gameLogic, row, col, false);
+                        }
+                        //check NE
+                        if (gameLogic[row - rowOffSet][col + columnOffSet] == W){
+                            checkNE(gameLogic, row, col, false);
+                        }
+                        //check E
+                        if (gameLogic[row][col + columnOffSet] == W){
+                            checkE(gameLogic, row, col, false);
+                        }
+                        //check SE
+                        if (gameLogic[row + rowOffSet][col + columnOffSet] == W){
+                            checkSE(gameLogic, row, col, false);
+                        }
+                        //check S
+                        if (gameLogic[row + rowOffSet][col] == W){
+                            checkS(gameLogic, row, col, false);
+                        }
+                        //check SW
+                        if (gameLogic[row + rowOffSet][col - columnOffSet] == W){
+                            checkSW(gameLogic, row, col, false);
+                        }
+                        //check W
+                        if (gameLogic[row][col - columnOffSet] == W){
+                            checkW(gameLogic, row, col, false);
+                        }
+                        //check NW
+                        if (gameLogic[row - rowOffSet][col - columnOffSet] == W){
+                            checkNW(gameLogic, row, col, false);
+                        }
+                    }
+                }
             }
         }
     }
 
-    private static void checkN(int[][] gameLogic, int row, int col){
+    private static void checkN(int[][] gameLogic, int row, int col, boolean isWhiteTurn){
         int rowOffSet = 1;
         int colOffSet = 1;
 
-
-        while(gameLogic[row - rowOffSet][col] == W){
-            rowOffSet++;
-        }
-        if (gameLogic[row - rowOffSet][col] == N){
-            gameLogic[row - rowOffSet][col] = validBlack;
+        if (isWhiteTurn){
+            while(gameLogic[row - rowOffSet][col] == B){
+                rowOffSet++;
+            }
+            if (gameLogic[row - rowOffSet][col] == N){
+                gameLogic[row - rowOffSet][col] = validWhite;
 //            for (int i = 0; i <= rowOffSet; i++){
 //                gameLogic[row - i][col] = B;
 //            }
+            }
+        }
+        else {
+            while(gameLogic[row - rowOffSet][col] == W){
+                rowOffSet++;
+            }
+            if (gameLogic[row - rowOffSet][col] == N){
+                gameLogic[row - rowOffSet][col] = validBlack;
+//            for (int i = 0; i <= rowOffSet; i++){
+//                gameLogic[row - i][col] = B;
+//            }
+            }
         }
     }
 
-    private static void checkS(int[][] gameLogic, int row, int col){
+    private static void checkS(int[][] gameLogic, int row, int col, boolean isWhiteTurn){
         int rowOffSet = 1;
         int colOffSet = 1;
 
-        while(gameLogic[row + rowOffSet][col] == W){
-            rowOffSet++;
+        if (isWhiteTurn){
+            while(gameLogic[row + rowOffSet][col] == B){
+                rowOffSet++;
+            }
+            if (gameLogic[row + rowOffSet][col] == N){
+                gameLogic[row + rowOffSet][col] = validWhite;
+            }
         }
-        if (gameLogic[row + rowOffSet][col] == N){
-            gameLogic[row + rowOffSet][col] = validBlack;
+        else {
+            while(gameLogic[row + rowOffSet][col] == W){
+                rowOffSet++;
+            }
+            if (gameLogic[row + rowOffSet][col] == N){
+                gameLogic[row + rowOffSet][col] = validBlack;
+            }
         }
     }
 
-    private static void checkE(int[][] gameLogic, int row, int col){
+    private static void checkE(int[][] gameLogic, int row, int col, boolean isWhiteTurn){
         int rowOffSet = 1;
         int colOffSet = 1;
-        while(gameLogic[row][col + colOffSet] == W){
-            colOffSet++;
-        }
-        if (gameLogic[row][col + colOffSet] == N){
-            gameLogic[row][col + colOffSet] = validBlack;
+
+        if (isWhiteTurn){
+            while(gameLogic[row][col + colOffSet] == B){
+                colOffSet++;
+            }
+            if (gameLogic[row][col + colOffSet] == N){
+                gameLogic[row][col + colOffSet] = validWhite;
 //            for (int i = 0; i <= colOffSet; i++){
 //                gameLogic[row][col + i] = B;
 //            }
+            }
+        }
+        else{
+            while(gameLogic[row][col + colOffSet] == W){
+                colOffSet++;
+            }
+            if (gameLogic[row][col + colOffSet] == N){
+                gameLogic[row][col + colOffSet] = validBlack;
+//            for (int i = 0; i <= colOffSet; i++){
+//                gameLogic[row][col + i] = B;
+//            }
+            }
+        }
+
+    }
+
+    private static void checkW(int[][] gameLogic, int row, int col, boolean isWhiteTurn){
+        int rowOffSet = 1;
+        int colOffSet = 1;
+
+        if (isWhiteTurn){
+            while (gameLogic[row][col - colOffSet] == B){
+                colOffSet++;
+            }
+            if (gameLogic[row][col - colOffSet] == N){
+                gameLogic[row][col - colOffSet] = validWhite;
+            }
+        }
+        else {
+            while (gameLogic[row][col - colOffSet] == W){
+                colOffSet++;
+            }
+            if (gameLogic[row][col - colOffSet] == N){
+                gameLogic[row][col - colOffSet] = validBlack;
+            }
+        }
+
+    }
+
+    private static void checkNE(int[][] gameLogic, int row, int col, boolean isWhiteTurn){
+        int rowOffSet = 1;
+        int colOffSet = 1;
+
+        if (isWhiteTurn){
+            while (gameLogic[row - rowOffSet][col + colOffSet] == B){
+                rowOffSet++;
+                colOffSet++;
+            }
+            if (gameLogic[row - rowOffSet][col + colOffSet] == N){
+                gameLogic[row - rowOffSet][col + colOffSet] = validWhite;
+            }
+        }
+        else {
+            while (gameLogic[row - rowOffSet][col + colOffSet] == W){
+                rowOffSet++;
+                colOffSet++;
+            }
+            if (gameLogic[row - rowOffSet][col + colOffSet] == N){
+                gameLogic[row - rowOffSet][col + colOffSet] = validBlack;
+            }
+        }
+
+    }
+    private static void checkSE(int[][] gameLogic, int row, int col, boolean isWhiteTurn){
+        int rowOffSet = 1;
+        int colOffSet = 1;
+
+        if (isWhiteTurn){
+            while (gameLogic[row + rowOffSet][col + colOffSet] == B){
+                rowOffSet++;
+                colOffSet++;
+            }
+            if (gameLogic[row + rowOffSet][col + colOffSet] == N){
+                gameLogic[row + rowOffSet][col + colOffSet] = validWhite;
+            }
+        }
+        else {
+            while (gameLogic[row + rowOffSet][col + colOffSet] == W){
+                rowOffSet++;
+                colOffSet++;
+            }
+            if (gameLogic[row + rowOffSet][col + colOffSet] == N){
+                gameLogic[row + rowOffSet][col + colOffSet] = validBlack;
+            }
         }
     }
 
-    private static void checkW(int[][] gameLogic, int row, int col){
+    private static void checkSW(int[][] gameLogic, int row, int col, boolean isWhiteTurn){
         int rowOffSet = 1;
         int colOffSet = 1;
-        while (gameLogic[row][col - colOffSet] == W){
-            colOffSet++;
+
+        if (isWhiteTurn){
+            while (gameLogic[row + rowOffSet][col - colOffSet] == B){
+                rowOffSet++;
+                colOffSet++;
+            }
+            if (gameLogic[row + rowOffSet][col - colOffSet] == N){
+                gameLogic[row + rowOffSet][col - colOffSet] = validWhite;
+            }
         }
-        if (gameLogic[row][col - colOffSet] == N){
-            gameLogic[row][col - colOffSet] = validBlack;
+        else {
+            while (gameLogic[row + rowOffSet][col - colOffSet] == W){
+                rowOffSet++;
+                colOffSet++;
+            }
+            if (gameLogic[row + rowOffSet][col - colOffSet] == N){
+                gameLogic[row + rowOffSet][col - colOffSet] = validBlack;
+            }
         }
+
     }
 
-    private static void checkNE(int[][] gameLogic, int row, int col){
+    private static void checkNW(int[][] gameLogic, int row, int col, boolean isWhiteTurn){
         int rowOffSet = 1;
         int colOffSet = 1;
-        while (gameLogic[row - rowOffSet][col + colOffSet] == W){
-            rowOffSet++;
-            colOffSet++;
-        }
-        if (gameLogic[row - rowOffSet][col + colOffSet] == N){
-            gameLogic[row - rowOffSet][col + colOffSet] = validBlack;
-        }
-    }
-    private static void checkSE(int[][] gameLogic, int row, int col){
-        int rowOffSet = 1;
-        int colOffSet = 1;
-        while (gameLogic[row + rowOffSet][col + colOffSet] == W){
-            rowOffSet++;
-            colOffSet++;
-        }
-        if (gameLogic[row + rowOffSet][col + colOffSet] == N){
-            gameLogic[row + rowOffSet][col + colOffSet] = validBlack;
-        }
-    }
 
-    private static void checkSW(int[][] gameLogic, int row, int col){
-        int rowOffSet = 1;
-        int colOffSet = 1;
-        while (gameLogic[row + rowOffSet][col - colOffSet] == W){
-            rowOffSet++;
-            colOffSet++;
+        if (isWhiteTurn){
+            while (gameLogic[row - rowOffSet][col - colOffSet] == B){
+                rowOffSet++;
+                colOffSet++;
+            }
+            if (gameLogic[row - rowOffSet][col - colOffSet] == N){
+                gameLogic[row - rowOffSet][col - colOffSet] = validWhite;
+            }
         }
-        if (gameLogic[row + rowOffSet][col - colOffSet] == N){
-            gameLogic[row + rowOffSet][col - colOffSet] = validBlack;
+        else {
+            while (gameLogic[row - rowOffSet][col - colOffSet] == W){
+                rowOffSet++;
+                colOffSet++;
+            }
+            if (gameLogic[row - rowOffSet][col - colOffSet] == N){
+                gameLogic[row - rowOffSet][col - colOffSet] = validBlack;
+            }
         }
-    }
 
-    private static void checkNW(int[][] gameLogic, int row, int col){
-        int rowOffSet = 1;
-        int colOffSet = 1;
-        while (gameLogic[row - rowOffSet][col - colOffSet] == W){
-            rowOffSet++;
-            colOffSet++;
-        }
-        if (gameLogic[row - rowOffSet][col - colOffSet] == N){
-            gameLogic[row - rowOffSet][col - colOffSet] = validBlack;
-        }
     }
 
     public static void logGameLogicState(int[][] gameLogic){
