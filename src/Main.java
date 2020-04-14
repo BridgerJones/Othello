@@ -35,10 +35,10 @@ public class Main extends Application{
     public int[][] gameLogic = {
             { N, N, N, N, N, N, N, N, },
             { N, N, N, N, N, N, N, N, },
-            { N, N, N, N, N, N, N, N, },
+            { N, N, N, W, N, W, N, N, },
             { N, N, N, W, B, N, N, N, },
             { N, N, N, B, W, N, N, N, },
-            { N, N, N, N, N, N, N, N, },
+            { N, N, W, N, W, N, N, N, },
             { N, N, N, N, N, N, N, N, },
             { N, N, N, N, N, N, N, N, },
 
@@ -163,23 +163,34 @@ public class Main extends Application{
                     if (gameLogic[row - rowOffSet][col] == W){
                         checkN(gameLogic, row, col);
                     }
+                    //check NE
+                    if (gameLogic[row - rowOffSet][col + columnOffSet] == W){
+                        checkNE(gameLogic, row, col);
+                    }
+                    //check E
                     if (gameLogic[row][col + columnOffSet] == W){
                         checkE(gameLogic, row, col);
                     }
-                    //check NE
-
-                    //check E
-
                     //check SE
-
+                    if (gameLogic[row + rowOffSet][col + columnOffSet] == W){
+                        checkSE(gameLogic, row, col);
+                    }
                     //check S
-
+                    if (gameLogic[row + rowOffSet][col] == W){
+                        checkS(gameLogic, row, col);
+                    }
                     //check SW
-
+                    if (gameLogic[row + rowOffSet][col - columnOffSet] == W){
+                        checkSW(gameLogic, row, col);
+                    }
                     //check W
-
+                    if (gameLogic[row][col - columnOffSet] == W){
+                        checkW(gameLogic, row, col);
+                    }
                     //check NW
-
+                    if (gameLogic[row - rowOffSet][col - columnOffSet] == W){
+                        checkNW(gameLogic, row, col);
+                    }
                 }
                 //white disk logic
 
@@ -203,6 +214,18 @@ public class Main extends Application{
         }
     }
 
+    private static void checkS(int[][] gameLogic, int row, int col){
+        int rowOffSet = 1;
+        int colOffSet = 1;
+
+        while(gameLogic[row + rowOffSet][col] == W){
+            rowOffSet++;
+        }
+        if (gameLogic[row + rowOffSet][col] == N){
+            gameLogic[row + rowOffSet][col] = validBlack;
+        }
+    }
+
     private static void checkE(int[][] gameLogic, int row, int col){
         int rowOffSet = 1;
         int colOffSet = 1;
@@ -214,6 +237,64 @@ public class Main extends Application{
 //            for (int i = 0; i <= colOffSet; i++){
 //                gameLogic[row][col + i] = B;
 //            }
+        }
+    }
+
+    private static void checkW(int[][] gameLogic, int row, int col){
+        int rowOffSet = 1;
+        int colOffSet = 1;
+        while (gameLogic[row][col - colOffSet] == W){
+            colOffSet++;
+        }
+        if (gameLogic[row][col - colOffSet] == N){
+            gameLogic[row][col - colOffSet] = validBlack;
+        }
+    }
+
+    private static void checkNE(int[][] gameLogic, int row, int col){
+        int rowOffSet = 1;
+        int colOffSet = 1;
+        while (gameLogic[row - rowOffSet][col + colOffSet] == W){
+            rowOffSet++;
+            colOffSet++;
+        }
+        if (gameLogic[row - rowOffSet][col + colOffSet] == N){
+            gameLogic[row - rowOffSet][col + colOffSet] = validBlack;
+        }
+    }
+    private static void checkSE(int[][] gameLogic, int row, int col){
+        int rowOffSet = 1;
+        int colOffSet = 1;
+        while (gameLogic[row + rowOffSet][col + colOffSet] == W){
+            rowOffSet++;
+            colOffSet++;
+        }
+        if (gameLogic[row + rowOffSet][col + colOffSet] == N){
+            gameLogic[row + rowOffSet][col + colOffSet] = validBlack;
+        }
+    }
+
+    private static void checkSW(int[][] gameLogic, int row, int col){
+        int rowOffSet = 1;
+        int colOffSet = 1;
+        while (gameLogic[row + rowOffSet][col - colOffSet] == W){
+            rowOffSet++;
+            colOffSet++;
+        }
+        if (gameLogic[row + rowOffSet][col - colOffSet] == N){
+            gameLogic[row + rowOffSet][col - colOffSet] = validBlack;
+        }
+    }
+
+    private static void checkNW(int[][] gameLogic, int row, int col){
+        int rowOffSet = 1;
+        int colOffSet = 1;
+        while (gameLogic[row - rowOffSet][col - colOffSet] == W){
+            rowOffSet++;
+            colOffSet++;
+        }
+        if (gameLogic[row - rowOffSet][col - colOffSet] == N){
+            gameLogic[row - rowOffSet][col - colOffSet] = validBlack;
         }
     }
 
