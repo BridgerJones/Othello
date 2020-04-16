@@ -183,87 +183,93 @@ public class Main extends Application{
     }
 
     public static void updateValidMoves(int[][] gameLogic){
-        for (int row = 0; row < 8; row++){
-            for (int col = 0; col < 8; col++){
-                if (isWhiteTurn){
-                    //white disk logic
-                    if (gameLogic[row][col] == W){
-                        int rowOffSet = 1;
-                        int columnOffSet = 1;
-                        //check N
-                        if (gameLogic[row - rowOffSet][col] == B){
-                            checkN(gameLogic, row, col, true);
-                        }
-                        //check NE
-                        if (gameLogic[row - rowOffSet][col + columnOffSet] == B){
-                            checkNE(gameLogic, row, col, true);
-                        }
-                        //check E
-                        if (gameLogic[row][col + columnOffSet] == B){
-                            checkE(gameLogic, row, col, true);
-                        }
-                        //check SE
-                        if (gameLogic[row + rowOffSet][col + columnOffSet] == B){
-                            checkSE(gameLogic, row, col, true);
-                        }
-                        //check S
-                        if (gameLogic[row + rowOffSet][col] == B){
-                            checkS(gameLogic, row, col, true);
-                        }
-                        //check SW
-                        if (gameLogic[row + rowOffSet][col - columnOffSet] == B){
-                            checkSW(gameLogic, row, col, true);
-                        }
-                        //check W
-                        if (gameLogic[row][col - columnOffSet] == B){
-                            checkW(gameLogic, row, col, true);
-                        }
-                        //check NW
-                        if (gameLogic[row - rowOffSet][col - columnOffSet] == B){
-                            checkNW(gameLogic, row, col, true);
+        try{
+            for (int row = 0; row < 8; row++){
+                for (int col = 0; col < 8; col++){
+                    if (isWhiteTurn){
+                        //white disk logic
+                        if (gameLogic[row][col] == W){
+                            int rowOffSet = 1;
+                            int columnOffSet = 1;
+                            //check N
+                            if (gameLogic[row - rowOffSet][col] == B){
+                                checkN(gameLogic, row, col, true);
+                            }
+                            //check NE
+                            if (gameLogic[row - rowOffSet][col + columnOffSet] == B){
+                                checkNE(gameLogic, row, col, true);
+                            }
+                            //check E
+                            if (gameLogic[row][col + columnOffSet] == B){
+                                checkE(gameLogic, row, col, true);
+                            }
+                            //check SE
+                            if (gameLogic[row + rowOffSet][col + columnOffSet] == B){
+                                checkSE(gameLogic, row, col, true);
+                            }
+                            //check S
+                            if (gameLogic[row + rowOffSet][col] == B){
+                                checkS(gameLogic, row, col, true);
+                            }
+                            //check SW
+                            if (gameLogic[row + rowOffSet][col - columnOffSet] == B){
+                                checkSW(gameLogic, row, col, true);
+                            }
+                            //check W
+                            if (gameLogic[row][col - columnOffSet] == B){
+                                checkW(gameLogic, row, col, true);
+                            }
+                            //check NW
+                            if (gameLogic[row - rowOffSet][col - columnOffSet] == B){
+                                checkNW(gameLogic, row, col, true);
+                            }
                         }
                     }
-                }
-                else {
-                    // black disk logic
-                    if (gameLogic[row][col] == B){
-                        int rowOffSet = 1;
-                        int columnOffSet = 1;
-                        //check N
-                        if (gameLogic[row - rowOffSet][col] == W){
-                            checkN(gameLogic, row, col, false);
-                        }
-                        //check NE
-                        if (gameLogic[row - rowOffSet][col + columnOffSet] == W){
-                            checkNE(gameLogic, row, col, false);
-                        }
-                        //check E
-                        if (gameLogic[row][col + columnOffSet] == W){
-                            checkE(gameLogic, row, col, false);
-                        }
-                        //check SE
-                        if (gameLogic[row + rowOffSet][col + columnOffSet] == W){
-                            checkSE(gameLogic, row, col, false);
-                        }
-                        //check S
-                        if (gameLogic[row + rowOffSet][col] == W){
-                            checkS(gameLogic, row, col, false);
-                        }
-                        //check SW
-                        if (gameLogic[row + rowOffSet][col - columnOffSet] == W){
-                            checkSW(gameLogic, row, col, false);
-                        }
-                        //check W
-                        if (gameLogic[row][col - columnOffSet] == W){
-                            checkW(gameLogic, row, col, false);
-                        }
-                        //check NW
-                        if (gameLogic[row - rowOffSet][col - columnOffSet] == W){
-                            checkNW(gameLogic, row, col, false);
+                    else {
+                        // black disk logic
+                        if (gameLogic[row][col] == B){
+                            int rowOffSet = 1;
+                            int columnOffSet = 1;
+                            //check N
+                            if (gameLogic[row - rowOffSet][col] == W){
+                                checkN(gameLogic, row, col, false);
+                            }
+                            //check NE
+                            if (gameLogic[row - rowOffSet][col + columnOffSet] == W){
+                                checkNE(gameLogic, row, col, false);
+                            }
+                            //check E
+                            if (gameLogic[row][col + columnOffSet] == W){
+                                checkE(gameLogic, row, col, false);
+                            }
+                            //check SE
+                            if (gameLogic[row + rowOffSet][col + columnOffSet] == W){
+                                checkSE(gameLogic, row, col, false);
+                            }
+                            //check S
+                            if (gameLogic[row + rowOffSet][col] == W){
+                                checkS(gameLogic, row, col, false);
+                            }
+                            //check SW
+                            if (gameLogic[row + rowOffSet][col - columnOffSet] == W){
+                                checkSW(gameLogic, row, col, false);
+                            }
+                            //check W
+                            if (gameLogic[row][col - columnOffSet] == W){
+                                checkW(gameLogic, row, col, false);
+                            }
+                            //check NW
+                            if (gameLogic[row - rowOffSet][col - columnOffSet] == W){
+                                checkNW(gameLogic, row, col, false);
+                            }
                         }
                     }
                 }
             }
+
+        }
+        catch (Exception ignore){
+
         }
     }
 
