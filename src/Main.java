@@ -26,7 +26,7 @@ public class Main extends Application{
     //valid move white
     static final int validWhite = 4;
 
-    static boolean isWhiteTurn = true;
+    static boolean isWhiteTurn = false;
 
 
 
@@ -138,6 +138,25 @@ public class Main extends Application{
                 temp.setOnMouseExited(event ->{
                     temp.setFill(Color.TRANSPARENT);
                 });
+                temp.setOnMouseClicked(event ->{
+                    int getRow = temp.getCord()[1];
+                    int getCol = temp.getCord()[0];
+
+                    if (isWhiteTurn){
+                        if (gameLogic[getRow][getCol] == validWhite){
+                            gameLogic[getRow][getCol] = W;
+                            isWhiteTurn = false;
+                        }
+                    }
+                    else {
+                        if(gameLogic[getRow][getCol] == validBlack){
+                            gameLogic[getRow][getCol] = B;
+                            isWhiteTurn = true;
+                        }
+                    }
+                });
+
+                //default settings
                 temp.setFill(Color.TRANSPARENT);
                 temp.setStroke(Color.TRANSPARENT);
                 gameBoard.add(temp, row, col);
