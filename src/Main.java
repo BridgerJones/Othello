@@ -12,6 +12,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Set;
 
 public class Main extends Application{
@@ -118,16 +119,15 @@ public class Main extends Application{
                     int getRow = temp.getCord()[1];
 
                     updateValidMoves(gameLogic);
-                    logGameLogicState(gameLogic);
                     if (isWhiteTurn){
                         if (gameLogic[getRow][getCol] == validWhite){
-                            temp.setFill(Paint.valueOf("#f2f5f5"));
+                            temp.setFill(Color.WHITE);
                         }
                     }
 
                     else {
                         if (gameLogic[getRow][getCol] == validBlack){
-                            temp.setFill(Paint.valueOf("#ebeded"));
+                            temp.setFill(Color.BLACK);
                         }
                     }
 
@@ -141,10 +141,16 @@ public class Main extends Application{
                 temp.setOnMouseClicked(event ->{
                     int getRow = temp.getCord()[1];
                     int getCol = temp.getCord()[0];
+                    int rowOffSet = 1;
+                    int colOffSet = 1;
 
                     if (isWhiteTurn){
                         if (gameLogic[getRow][getCol] == validWhite){
                             gameLogic[getRow][getCol] = W;
+
+                            //riposte
+                            riposte(gameLogic, isWhiteTurn, getRow, getCol);
+
                             isWhiteTurn = false;
                         }
                     }
@@ -154,6 +160,9 @@ public class Main extends Application{
                             isWhiteTurn = true;
                         }
                     }
+                    refreshCanvas(gameLogic);
+                    updateValidMoves(gameLogic);
+                    logGameLogicState(gameLogic);
                 });
 
                 //default settings
@@ -165,6 +174,41 @@ public class Main extends Application{
 
         return gameBoard;
     }
+
+    public static void riposte(int[][] gameLogic, boolean isWhiteTurn, int row, int col){
+
+        int rowOffSet = 1;
+        int colOffSet = 1;
+
+        if (isWhiteTurn){
+            //check n
+            while(gameLogic[row - rowOffSet][col] == B){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row - rowOffSet);
+                validColCord.add(col);
+                rowOffSet++;
+                if (gameLogic[row - rowOffSet][col] == W){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][col] = W;
+                    }
+                }
+            }
+        }
+    }
+
+    public static void refreshCanvas(int[][]gameLogic){
+        for (int row = 0; row < 8; row++){
+            for (int col = 0; col < 8; col++){
+                if (gameLogic[row][col] == validBlack || gameLogic[row][col] == validWhite){
+                    gameLogic[row][col] = N;
+                }
+            }
+        }
+    }
+
+
 
     public static void updateCanvas(int[][] gameLogic, GridPane diskLayer){
 
@@ -266,7 +310,6 @@ public class Main extends Application{
                     }
                 }
             }
-
         }
         catch (Exception ignore){
 
@@ -283,9 +326,6 @@ public class Main extends Application{
             }
             if (gameLogic[row - rowOffSet][col] == N){
                 gameLogic[row - rowOffSet][col] = validWhite;
-//            for (int i = 0; i <= rowOffSet; i++){
-//                gameLogic[row - i][col] = B;
-//            }
             }
         }
         else {
