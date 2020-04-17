@@ -118,6 +118,7 @@ public class Main extends Application{
                     int getCol = temp.getCord()[0];
                     int getRow = temp.getCord()[1];
 
+                    refreshCanvas(gameLogic);
                     updateValidMoves(gameLogic);
                     if (isWhiteTurn){
                         if (gameLogic[getRow][getCol] == validWhite){
@@ -157,13 +158,14 @@ public class Main extends Application{
                     else {
                         if(gameLogic[getRow][getCol] == validBlack){
                             gameLogic[getRow][getCol] = B;
+                            //riposte
+                            riposte(gameLogic, isWhiteTurn, getRow, getCol);
                             isWhiteTurn = true;
                         }
                     }
-                    refreshCanvas(gameLogic);
-                    updateValidMoves(gameLogic);
                     logGameLogicState(gameLogic);
                 });
+
 
                 //default settings
                 temp.setFill(Color.TRANSPARENT);
@@ -195,6 +197,261 @@ public class Main extends Application{
                     }
                 }
             }
+            rowOffSet = 1;
+            //check ne
+            while(gameLogic[row - rowOffSet][col + colOffSet] == B){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row - rowOffSet);
+                validColCord.add(col + colOffSet);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row - rowOffSet][col + colOffSet] == W){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = W;
+                    }
+                }
+            }
+            rowOffSet = 1;
+            colOffSet = 1;
+            // check e
+            while(gameLogic[row][col + colOffSet] == B){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row);
+                validColCord.add(col + colOffSet);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row][col + colOffSet] == W){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = W;
+                    }
+                }
+            }
+            rowOffSet = 1;
+            colOffSet = 1;
+            // check se
+            while(gameLogic[row + rowOffSet][col + colOffSet] == B){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row + rowOffSet);
+                validColCord.add(col + colOffSet);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row + rowOffSet][col + colOffSet] == W){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = W;
+                    }
+                }
+            }
+            rowOffSet  = 1;
+            colOffSet = 1;
+            //check s
+            while(gameLogic[row + rowOffSet][col] == B){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row + rowOffSet);
+                validColCord.add(col);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row + rowOffSet][col] == W){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = W;
+                    }
+                }
+            }
+            rowOffSet = 1;
+            colOffSet = 1;
+            //check sw
+            while(gameLogic[row + rowOffSet][col - colOffSet] == B){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row + rowOffSet);
+                validColCord.add(col - colOffSet);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row + rowOffSet][col - colOffSet] == W){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = W;
+                    }
+                }
+            }
+            rowOffSet = 1;
+            colOffSet = 1;
+            //check w
+            while(gameLogic[row][col - colOffSet] == B){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row);
+                validColCord.add(col - colOffSet);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row][col - colOffSet] == W){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = W;
+                    }
+                }
+            }
+            rowOffSet = 1;
+            colOffSet = 1;
+            // check nw
+            while(gameLogic[row - rowOffSet][col - colOffSet] == B){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row - rowOffSet);
+                validColCord.add(col - colOffSet);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row - rowOffSet][col - colOffSet] == W){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = W;
+                    }
+                }
+            }
+        }
+
+        //black disk turn
+        else{
+            //check n
+            while(gameLogic[row - rowOffSet][col] == W){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row - rowOffSet);
+                validColCord.add(col);
+                rowOffSet++;
+                if (gameLogic[row - rowOffSet][col] == B){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][col] = B;
+                    }
+                }
+            }
+            rowOffSet = 1;
+            //check ne
+            while(gameLogic[row - rowOffSet][col + colOffSet] == W){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row - rowOffSet);
+                validColCord.add(col + colOffSet);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row - rowOffSet][col + colOffSet] == B){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = B;
+                    }
+                }
+            }
+            rowOffSet = 1;
+            colOffSet = 1;
+            // check e
+            while(gameLogic[row][col + colOffSet] == W){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row);
+                validColCord.add(col + colOffSet);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row][col + colOffSet] == B){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = B;
+                    }
+                }
+            }
+            rowOffSet = 1;
+            colOffSet = 1;
+            // check se
+            while(gameLogic[row + rowOffSet][col + colOffSet] == W){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row + rowOffSet);
+                validColCord.add(col + colOffSet);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row + rowOffSet][col + colOffSet] == B){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = B;
+                    }
+                }
+            }
+            rowOffSet  = 1;
+            colOffSet = 1;
+            //check s
+            while(gameLogic[row + rowOffSet][col] == W){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row + rowOffSet);
+                validColCord.add(col);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row + rowOffSet][col] == B){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = B;
+                    }
+                }
+            }
+            rowOffSet = 1;
+            colOffSet = 1;
+            //check sw
+            while(gameLogic[row + rowOffSet][col - colOffSet] == W){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row + rowOffSet);
+                validColCord.add(col - colOffSet);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row + rowOffSet][col - colOffSet] == B){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = B;
+                    }
+                }
+            }
+            rowOffSet = 1;
+            colOffSet = 1;
+            //check w
+            while(gameLogic[row][col - colOffSet] == W){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row);
+                validColCord.add(col - colOffSet);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row][col - colOffSet] == B){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = B;
+                    }
+                }
+            }
+            rowOffSet = 1;
+            colOffSet = 1;
+            // check nw
+            while(gameLogic[row - rowOffSet][col - colOffSet] == W){
+                ArrayList<Integer> validRowCord = new ArrayList<>();
+                ArrayList<Integer> validColCord = new ArrayList<>();
+
+                validRowCord.add(row - rowOffSet);
+                validColCord.add(col - colOffSet);
+                rowOffSet++;
+                colOffSet++;
+                if (gameLogic[row - rowOffSet][col - colOffSet] == B){
+                    for (int i = 0; i < validRowCord.size(); i++){
+                        gameLogic[validRowCord.get(i)][validColCord.get(i)] = B;
+                    }
+                }
+            }
+
         }
     }
 
