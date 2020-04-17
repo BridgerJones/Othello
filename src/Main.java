@@ -36,14 +36,19 @@ public class Main extends Application{
 
     // numerical representation of the game logic
     public int[][] gameLogic = {
-            { N, N, N, N, N, N, N, N, },
-            { N, N, N, N, N, N, N, N, },
-            { N, N, N, N, N, N, N, N, },
-            { N, N, N, W, B, N, N, N, },
-            { N, N, N, B, W, N, N, N, },
-            { N, N, N, N, N, N, N, N, },
-            { N, N, N, N, N, N, N, N, },
-            { N, N, N, N, N, N, N, N, },
+            { N,     N, N, N, N, N, N, N, N,     N, },
+
+            { N,     N, N, N, N, N, N, N, N,     N, },
+            { N,     N, N, N, N, N, N, N, N,     N, },
+            { N,     N, N, N, N, N, N, N, N,     N, },
+            { N,     N, N, N, W, B, N, N, N,     N, },
+            { N,     N, N, N, B, W, N, N, N,     N, },
+            { N,     N, N, N, N, N, N, N, N,     N, },
+            { N,     N, N, N, N, N, N, N, N,     N, },
+            { N,     N, N, N, N, N, N, N, N,     N, },
+
+            { N,     N, N, N, N, N, N, N, N,     N, },
+
     };
 
 
@@ -99,8 +104,8 @@ public class Main extends Application{
 
         GridPane gameBoard = new GridPane();
 
-        for(int row = 0; row < 8; row++){
-            for (int col = 0; col < 8; col++){
+        for(int row = 1; row < 9; row++){
+            for (int col = 1; col < 9; col++){
                 gameBoard.add(new GridSquare(row, col), row, col);
             }
         }
@@ -111,8 +116,8 @@ public class Main extends Application{
 
         GridPane gameBoard = new GridPane();
 
-        for(int row = 0; row < 8; row++){
-            for (int col = 0; col < 8; col++){
+        for(int row = 1; row < 9; row++){
+            for (int col = 1; col < 9; col++){
                 GridSquare temp = new GridSquare(row, col);
                 temp.setOnMouseEntered(event ->{
                     int getCol = temp.getCord()[0];
@@ -510,8 +515,8 @@ public class Main extends Application{
     }
 
     public static void refreshCanvas(int[][]gameLogic){
-        for (int row = 0; row < 8; row++){
-            for (int col = 0; col < 8; col++){
+        for (int row = 1; row < 9; row++){
+            for (int col = 1; col < 9; col++){
                 if (gameLogic[row][col] == validBlack || gameLogic[row][col] == validWhite){
                     gameLogic[row][col] = N;
                 }
@@ -524,8 +529,8 @@ public class Main extends Application{
     public static void updateCanvas(int[][] gameLogic, GridPane diskLayer){
 
 
-        for (int row = 0; row < 8; row++){
-            for (int col = 0; col < 8; col++){
+        for (int row = 1; row < 9; row++){
+            for (int col = 1; col < 9; col++){
                 if (gameLogic[row][col] == B){
 
                     diskLayer.add(new Disk(false), col, row);
@@ -539,8 +544,8 @@ public class Main extends Application{
 
     public static void updateValidMoves(int[][] gameLogic){
         try{
-            for (int row = 0; row < 8; row++){
-                for (int col = 0; col < 8; col++){
+            for (int row = 1; row < 9; row++){
+                for (int col = 1; col < 9; col++){
                     if (isWhiteTurn){
                         //white disk logic
                         if (gameLogic[row][col] == W){
@@ -623,7 +628,7 @@ public class Main extends Application{
             }
         }
         catch (Exception ignore){
-
+            System.out.println("Out of Bounds Error");
         }
     }
 
@@ -825,9 +830,9 @@ public class Main extends Application{
     }
 
     public static void logGameLogicState(int[][] gameLogic){
-        for(int row = 0; row < 8; row++){
-            for (int col = 0; col < 8; col++){
-                if (col == 7){
+        for(int row = 1; row < 9; row++){
+            for (int col = 1; col < 9; col++){
+                if (col == 8){
                     System.out.printf("%d,\n", gameLogic[row][col]);
 
                 }
