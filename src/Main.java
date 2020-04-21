@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -33,7 +34,7 @@ public class Main extends Application{
 
 
     // backgrounds
-    Background diskLayerBackground = new Background(new BackgroundFill(Paint.valueOf("#ab1bf3"), null, null));
+    Background diskLayerBackground = new Background(new BackgroundFill(Paint.valueOf("#c27817"), null, null));
 
     // numerical representation of the game logic
     public int[][] gameLogic = {
@@ -82,8 +83,12 @@ public class Main extends Application{
         VBox components = new VBox();
         components.setMinWidth(200);
         components.setMinHeight(1000);
-        components.getChildren().add(new Label("Hello"));
-
+        //Host Mod
+        components.getChildren().add(new Label("Host Game"));
+        Button hostGame = new Button("Host");
+        //add components
+        components.getChildren().addAll(hostGame);
+        // add hud to the gameCanvas
         leftHud.getChildren().add(components);
         gameCanvas.getChildren().add(leftHud);
 
@@ -92,6 +97,7 @@ public class Main extends Application{
         // initialization of stage
         Scene mainScene = new Scene(gameCanvas, 1000, 815);
         stage.setScene(mainScene);
+        stage.setResizable(false);
         stage.show();
 
     }
