@@ -2,6 +2,7 @@ import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -69,23 +70,22 @@ public class Main extends Application{
         updateCanvas(gameLogic, diskLayer);
 
 
-
+        //log beginning state
         logGameLogicState(gameLogic);
 
+        //hud
+        Pane leftHud = new Pane();
+        leftHud.setTranslateX(816);
+        leftHud.setBackground(diskLayerBackground);
 
-//        Pane rightHUD = new Pane();
-//        rightHUD.setMaxWidth(185);
-//        GridPane rightHudSections = new GridPane();
-//        Rectangle test = new Rectangle();
-//        test.setHeight(815);
-//        test.setWidth(185);
-//        test.setFill(Color.valueOf("#b56f05"));
+        //hud components
+        VBox components = new VBox();
+        components.setMinWidth(200);
+        components.setMinHeight(1000);
+        components.getChildren().add(new Label("Hello"));
 
-
-//        rightHudSections.add(test, 0, 1);
-//        rightHUD.getChildren().add(rightHudSections);
-//
-//        gameCanvas.setRight(test);
+        leftHud.getChildren().add(components);
+        gameCanvas.getChildren().add(leftHud);
 
 
 
