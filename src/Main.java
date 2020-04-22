@@ -128,11 +128,13 @@ public class Main extends Application{
         leftHud.getChildren().add(components);
         gameCanvas.getChildren().add(leftHud);
 
-
+        // main menu
+        Menu mainMenu = new Menu();
+        Scene mainMenuScene = mainMenu.createMainMenu();
 
         // initialization of stage
         Scene mainScene = new Scene(gameCanvas, 1000, 815);
-        stage.setScene(mainScene);
+        stage.setScene(mainMenuScene);
         stage.setResizable(false);
         stage.show();
 
@@ -583,6 +585,7 @@ public class Main extends Application{
             for (int col = 1; col < 9; col++){
                 if (gameLogic[row][col] == B){
                     blackCounter++;
+
                     diskLayer.add(new Disk(false), col, row);
                 }
                 else if (gameLogic[row][col] == W){
