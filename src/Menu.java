@@ -1,5 +1,7 @@
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -32,6 +34,17 @@ public class Menu{
         Pane mainMenu = new Pane();
         mainMenu.setBackground(background);
 
+        //setup media player
+        GameMedia mediaObject = new GameMedia();
+        MediaPlayer player = mediaObject.createMediaPlayer();
+        this.playerLoc = player;
+        MediaView playerView = new MediaView(player);
+        BooleanProperty isPlaying = new SimpleBooleanProperty();
+        isPlaying.setValue(true);
+        isPlaying.addListener(ov ->{
+            this.playerLoc.stop();
+        });
+
         //main Logo
         ImageView othelloLogo = new ImageView("Othello.png");
         othelloLogo.xProperty().bind(mainMenu.widthProperty().multiply(0.25));
@@ -61,14 +74,9 @@ public class Menu{
         start.setOnMouseClicked(event ->{
             nextStage.setScene(nextScene);
             nextStage.show();
-            this.playerLoc.stop();
+            isPlaying.setValue(false);
         });
 
-        //setup media player
-        GameMedia mediaObject = new GameMedia();
-        MediaPlayer player = mediaObject.createMediaPlayer();
-        this.playerLoc = player;
-        MediaView playerView = new MediaView(player);
 
 
 
