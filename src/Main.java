@@ -1,4 +1,10 @@
 import javafx.application.Application;
+import javafx.beans.Observable;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +19,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.util.regex.*;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -31,6 +38,14 @@ public class Main extends Application{
     static final int validWhite = 4;
 
     static boolean isWhiteTurn = false;
+
+    //player one stats
+    static int blackTotal = 0;
+    static IntegerProperty blackListener = new SimpleIntegerProperty();
+
+
+    //player two stats
+    static int whiteTotal = 0;
 
 
 
@@ -64,9 +79,7 @@ public class Main extends Application{
         gameCanvas.getChildren().add(gameBoard);
         // create instance of the disk layer
         GridPane diskLayer = createDiskLayer(gameLogic);
-        diskLayer.setOnMouseClicked(event ->{
-            updateCanvas(gameLogic, diskLayer);
-        });
+
 
         gameCanvas.getChildren().add(diskLayer);
         updateCanvas(gameLogic, diskLayer);
@@ -87,6 +100,7 @@ public class Main extends Application{
         //Host Mod
         components.getChildren().add(new Label("Host Game"));
         Button hostGame = new Button("Host");
+
         components.getChildren().add(hostGame);
         //Join Module
         components.getChildren().add(new Label("Join a Game: Enter IP address"));
@@ -94,6 +108,16 @@ public class Main extends Application{
         ipField.setMaxWidth(150);
         Button joinGame = new Button("Join");
         components.getChildren().addAll(ipField, joinGame);
+        // Player 1 Stats
+
+        Label playerOne = new Label("Player 1 Stats");
+        Label blackDisks = new Label("Black Disk Total: " + blackTotal);
+        components.getChildren().addAll(playerOne, blackDisks);
+
+        // Player 2 Stats
+        Label playerTwo = new Label("Player 2 Stats");
+        Label whiteDisks = new Label("White Disk Total: " + whiteTotal);
+        components.getChildren().addAll(playerTwo, whiteDisks);
         //add components
 
         // add hud to the gameCanvas
@@ -107,6 +131,13 @@ public class Main extends Application{
         stage.setScene(mainScene);
         stage.setResizable(false);
         stage.show();
+
+        //disk layer lambdas
+        diskLayer.setOnMouseClicked(event ->{
+            updateCanvas(gameLogic, diskLayer);
+            blackDisks.setText("Black Disk Total: " + blackTotal);
+            whiteDisks.setText("White Disk Total: " + whiteTotal);
+        });
 
     }
 
@@ -541,19 +572,23 @@ public class Main extends Application{
 
 
     public static void updateCanvas(int[][] gameLogic, GridPane diskLayer){
-
+        int blackCounter = 0;
+        int whiteCounter = 0;
 
         for (int row = 1; row < 9; row++){
             for (int col = 1; col < 9; col++){
                 if (gameLogic[row][col] == B){
-
+                    blackCounter++;
                     diskLayer.add(new Disk(false), col, row);
                 }
                 else if (gameLogic[row][col] == W){
                     diskLayer.add(new Disk(true), col, row);
+                    whiteCounter++;
                 }
             }
         }
+        blackTotal = blackCounter;
+        whiteTotal = whiteCounter;
     }
 
     public static void updateValidMoves(int[][] gameLogic){
