@@ -1,3 +1,5 @@
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -6,6 +8,9 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.security.Key;
 
 public class Menu{
 
@@ -30,10 +35,23 @@ public class Menu{
         ImageView start = new ImageView("Start.png");
         start.xProperty().bind(mainMenu.widthProperty().multiply(0.35));
         start.yProperty().bind(mainMenu.heightProperty().multiply(0.50));
+
+        //start animation
+        Timeline startAnimation = new Timeline(new KeyFrame(Duration.millis(250), e ->{
+            if (start.getImage().getUrl().equals("file:/Users/Bridger/Desktop/Othello/out/production/Othello/Start.png")){
+                start.setImage(new Image("StartOnHover.png"));
+            }
+            else {
+                start.setImage(new Image("Start.png"));
+            }
+        }));
+        startAnimation.setCycleCount(Timeline.INDEFINITE);
         start.setOnMouseEntered(e ->{
-            start.setImage(new Image("StartOnHover.png"));
+            startAnimation.play();
+            System.out.println(start.getImage().getUrl());
         });
         start.setOnMouseExited(e ->{
+            startAnimation.stop();
             start.setImage(new Image("Start.png"));
         });
         start.setOnMouseClicked(event ->{
