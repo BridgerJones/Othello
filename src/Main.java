@@ -128,12 +128,16 @@ public class Main extends Application{
         leftHud.getChildren().add(components);
         gameCanvas.getChildren().add(leftHud);
 
+        //initalize game scene
+        Scene mainScene = new Scene(gameCanvas, 1000, 815);
+
         // main menu
         Menu mainMenu = new Menu();
         Scene mainMenuScene = mainMenu.createMainMenu();
+        mainMenu.setStartTarget(stage, mainScene);
+
 
         // initialization of stage
-        Scene mainScene = new Scene(gameCanvas, 1000, 815);
         stage.setScene(mainMenuScene);
         stage.setResizable(false);
         stage.show();

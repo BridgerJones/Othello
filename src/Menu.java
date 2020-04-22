@@ -5,9 +5,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 public class Menu{
 
+    Stage nextStage;
+    Scene nextScene;
 
     public Menu(){
 
@@ -33,6 +36,11 @@ public class Menu{
         start.setOnMouseExited(e ->{
             start.setImage(new Image("Start.png"));
         });
+        start.setOnMouseClicked(event ->{
+            nextStage.setScene(nextScene);
+            nextStage.show();
+        });
+
 
 
 
@@ -44,4 +52,9 @@ public class Menu{
 
         return mainMenuScene;
     }
+    public void setStartTarget(Stage stage, Scene scene){
+        this.nextStage = stage;
+        this.nextScene = scene;
+    }
+
 }
