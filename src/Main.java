@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -86,8 +87,15 @@ public class Main extends Application{
         //Host Mod
         components.getChildren().add(new Label("Host Game"));
         Button hostGame = new Button("Host");
+        components.getChildren().add(hostGame);
+        //Join Module
+        components.getChildren().add(new Label("Join a Game: Enter IP address"));
+        TextField ipField = new TextField();
+        ipField.setMaxWidth(150);
+        Button joinGame = new Button("Join");
+        components.getChildren().addAll(ipField, joinGame);
         //add components
-        components.getChildren().addAll(hostGame);
+
         // add hud to the gameCanvas
         leftHud.getChildren().add(components);
         gameCanvas.getChildren().add(leftHud);
