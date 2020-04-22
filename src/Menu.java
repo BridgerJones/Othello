@@ -7,15 +7,20 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import java.io.File;
 import java.security.Key;
 
 public class Menu{
 
     Stage nextStage;
     Scene nextScene;
+    MediaPlayer playerLoc;
 
     public Menu(){
 
@@ -48,7 +53,6 @@ public class Menu{
         startAnimation.setCycleCount(Timeline.INDEFINITE);
         start.setOnMouseEntered(e ->{
             startAnimation.play();
-            System.out.println(start.getImage().getUrl());
         });
         start.setOnMouseExited(e ->{
             startAnimation.stop();
@@ -57,14 +61,19 @@ public class Menu{
         start.setOnMouseClicked(event ->{
             nextStage.setScene(nextScene);
             nextStage.show();
+            this.playerLoc.stop();
         });
 
-
+        //setup media player
+        GameMedia mediaObject = new GameMedia();
+        MediaPlayer player = mediaObject.createMediaPlayer();
+        this.playerLoc = player;
+        MediaView playerView = new MediaView(player);
 
 
 
         //add all children
-        mainMenu.getChildren().addAll(othelloLogo, start);
+        mainMenu.getChildren().addAll(othelloLogo, start, playerView);
 
         Scene mainMenuScene = new Scene(mainMenu, 1000, 815);
 
@@ -73,6 +82,9 @@ public class Menu{
     public void setStartTarget(Stage stage, Scene scene){
         this.nextStage = stage;
         this.nextScene = scene;
+    }
+    public void playTheme(){
+        this.playerLoc.play();
     }
 
 }

@@ -12,6 +12,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
@@ -19,6 +21,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.File;
 import java.util.regex.*;
 
 import java.awt.event.MouseEvent;
@@ -134,6 +138,7 @@ public class Main extends Application{
         // main menu
         Menu mainMenu = new Menu();
         Scene mainMenuScene = mainMenu.createMainMenu();
+
         mainMenu.setStartTarget(stage, mainScene);
 
 
@@ -141,6 +146,7 @@ public class Main extends Application{
         stage.setScene(mainMenuScene);
         stage.setResizable(false);
         stage.show();
+        mainMenu.playerLoc.play();
 
         //disk layer lambdas
         diskLayer.setOnMouseClicked(event ->{
