@@ -109,15 +109,19 @@ public class Main extends Application{
         Button joinGame = new Button("Join");
         components.getChildren().addAll(ipField, joinGame);
         // Player 1 Stats
-
+        Label section = new Label("--------------------");
         Label playerOne = new Label("Player 1 Stats");
         Label blackDisks = new Label("Black Disk Total: " + blackTotal);
-        components.getChildren().addAll(playerOne, blackDisks);
+        Label section2 = new Label("--------------------");
+
+        components.getChildren().addAll(section,playerOne, blackDisks, section2);
 
         // Player 2 Stats
         Label playerTwo = new Label("Player 2 Stats");
         Label whiteDisks = new Label("White Disk Total: " + whiteTotal);
-        components.getChildren().addAll(playerTwo, whiteDisks);
+        Label section3 = new Label("--------------------");
+
+        components.getChildren().addAll(playerTwo, whiteDisks, section3);
         //add components
 
         // add hud to the gameCanvas
