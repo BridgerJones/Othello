@@ -146,6 +146,7 @@ public class Main extends Application{
         stage.setScene(mainMenuScene);
         stage.setResizable(false);
         stage.show();
+        //play main theme
         mainMenu.playerLoc.play();
 
         //disk layer lambdas
@@ -161,6 +162,10 @@ public class Main extends Application{
         launch(args);
     }
 
+    /**
+     * @author bridger
+     * @return returns a gameboard
+     */
     public static GridPane createGameBoard(){
 
         GridPane gameBoard = new GridPane();
@@ -173,6 +178,14 @@ public class Main extends Application{
 
         return gameBoard;
     }
+
+    /**
+     * @author bridger
+     * @param gameLogic
+     * @return this returns a disk layer filled with empty sprites to enforce the size of the grid.
+     * this also is what holds the disk sprites as they are added on top.
+     *
+     */
     public static GridPane createDiskLayer(int[][]gameLogic){
 
         GridPane gameBoard = new GridPane();
@@ -243,6 +256,17 @@ public class Main extends Application{
         return gameBoard;
     }
 
+    /**
+     * @author bridger
+     * @param gameLogic
+     * @param isWhiteTurn
+     * @param row
+     * @param col
+     * this method is in charge of making sure that sandwiched cells are changed to the current players disk.
+     * I named it riposte as a reference to the sword fighting technique in Dark Souls that when done against you usually
+     * ends in choice words and death. LOL. This is because often in Othello you will think you are winning only to have your opponent make the next move
+     * and totally destroy you and win the game. Especially common towards end game.
+     */
     public static void riposte(int[][] gameLogic, boolean isWhiteTurn, int row, int col){
 
         int rowOffSet = 1;
@@ -575,6 +599,11 @@ public class Main extends Application{
         }
     }
 
+    /**
+     * @author bridger
+     * @param gameLogic
+     * refreshes the numerical representation after a move to make sure no old valid moves are left behind
+     */
     public static void refreshCanvas(int[][]gameLogic){
         for (int row = 1; row < 9; row++){
             for (int col = 1; col < 9; col++){
@@ -607,6 +636,13 @@ public class Main extends Application{
         blackTotal = blackCounter;
         whiteTotal = whiteCounter;
     }
+
+    /**
+     * @author bridger
+     * @param gameLogic
+     * updates the valid moves on the numerical representation
+     * depends on the private methods that check the different directions
+     */
 
     public static void updateValidMoves(int[][] gameLogic){
         try{
@@ -698,6 +734,7 @@ public class Main extends Application{
         }
     }
 
+    //All of these private methods check the number grid and update valid moves
     private static void checkN(int[][] gameLogic, int row, int col, boolean isWhiteTurn){
         int rowOffSet = 1;
         int colOffSet = 1;
@@ -894,7 +931,13 @@ public class Main extends Application{
         }
 
     }
+    //end of check valid move dependancies
 
+    /**
+     * @author bridger
+     * @param gameLogic
+     * logs the numerical representation of the game
+     */
     public static void logGameLogicState(int[][] gameLogic){
         for(int row = 1; row < 9; row++){
             for (int col = 1; col < 9; col++){
